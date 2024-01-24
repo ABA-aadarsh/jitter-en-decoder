@@ -1,0 +1,32 @@
+.container{
+    width: 100%;
+    min-height: 300px;
+    padding: 25px;
+    background-color: #1fce9a;
+    color: white;
+    display: flex;
+    gap: 100px;
+}
+.box1, .box2{
+    max-width: 300px;
+}
+.box1 h1{
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+}
+.box1 p{
+    margin-bottom: 10px;
+}
+.box2 ul{
+    margin-top: 10px;
+    list-style-type: none;
+}
+.box2 ul li{
+    margin-bottom: 10px;
+}
+.box2 ul li a{
+    color: inherit;
+    text-decoration: none;
+}

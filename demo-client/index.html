@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Jitter-En/Decode</title>
+</head>
+<body>
+    <main>
+        <header>
+            <nav>
+                <h1>En/Decode</h1>
+            </nav>
+            <form class="uploadImageforDecoding">
+                <input type="file" name="file" id="fileUploadInput"
+                >
+            </form>
+            <div class="uploadBox">
+                <!-- <input type="text" class="value"> -->
+                <textarea name="" id="" cols="30" rows="10" class="value"></textarea>
+                <button
+                    id="submitBtn"
+                >Submit</button>
+            </div>
+            <div class="generatedImageContainer hide">
+                <canvas id="canvas"></canvas>
+                <button class="downloadBtn">Download</button>
+                <pre>
+                    <div class="decodedResult hide"></div>
+                </pre>
+            </div>
+        </header>
+        <footer>
+            <span>Github Link</span>
+        </footer>
+    </main>
+    <script src="./index.js"></script>
+</body>
+</html>

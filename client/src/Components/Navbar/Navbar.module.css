@@ -1,0 +1,82 @@
+.container{
+    /* background-color: #38D9A9; */
+    background-color: #1FCE9A;
+    /* margin: 10px; */
+    margin-bottom: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+}
+.container ul{
+    list-style-type: none;
+}
+.logoContainer{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-grow: 1;
+}
+.logoContainer h1{
+    letter-spacing: 1px;
+}
+.logoContainer h1 a{
+    color: white;
+    text-decoration: none;
+}
+.linksContainer{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-right: 150px;
+}
+.linksContainer li{
+    font-size: 18px;
+    color: white;
+    font-style: normal;
+    text-decoration: none;
+    position: relative;
+}
+.linksContainer li a::after{
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0px;
+    height: 2px;
+    background-color: #ffffff;
+    width: 0%;
+    transition: 0.2s linear;
+}
+.linksContainer li a:hover::after{
+    width: 100%;
+}
+.linksContainer li a.linkActive::after{
+    width: 100%;
+}
+.linksContainer li a{
+    font-size: inherit;
+    color: inherit;
+    font-style: inherit;
+    text-decoration: inherit;
+}
+.logoutBtn{
+    background-color: #2CF29F;
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding: 10px 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 20px;
+    transition: 0.2s linear;
+}
+.logoutBtn span{
+    padding-bottom: 2px;
+    font-size: 16px;
+}
+.logoutBtn:hover{
+    background-color: #1FCE9A;
+    box-shadow: 0px 0px 1px 1px white;
+    color: white;
+}

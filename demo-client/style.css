@@ -1,0 +1,15 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.hide{
+    display: none;
+}
+#canvas{
+    border: 1px solid black;
+    max-height: 350px;
+}
+p{
+    max-width: 100%;
+}

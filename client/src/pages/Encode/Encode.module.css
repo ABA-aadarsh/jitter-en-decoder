@@ -1,0 +1,179 @@
+.page{
+    padding: 10px;
+}
+.fileInput{
+    display: none;
+}
+.sectionContainer{
+    min-height: 100dvh;
+}
+.uploadFileContainer{
+    position: relative;
+    background-color: inherit;
+    min-height: 400px;
+    /* min-width: 400px; */
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+@keyframes rotate {
+    0%{
+        transform: rotate(0deg);
+    }100%{
+        transform: rotate(360deg);
+    }
+}
+.innerContainer{
+    /* border: 1px solid black; */
+    z-index: 1;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.outerBorder{
+    z-index: -1;
+    position: absolute;
+    top: 0px;
+    /* left: 0px; */
+    width: 300px;
+    height: 300px;
+    border: 5px dashed #1fce9a;
+    border-radius: 50%;
+    animation: rotate 15s linear infinite;
+}
+.innerContainer .icon{
+    height: 80px;
+    margin-bottom: 10px;
+}
+.browseFileLabel{
+    text-decoration: underline;
+    color: #259A86;
+    cursor: pointer;
+}
+@keyframes wiggle {
+    0%{
+        transform: rotate(0deg);
+    }25%{
+        transform: rotate(-10deg);
+    }50%{
+        transform: rotate(0deg);
+    }75%{
+        transform: rotate(10deg);
+    }100%{
+        transform: rotate(0deg);
+    }
+}
+.dropFileMessage{
+    font-size: 40px;
+    font-weight: 700;
+    /* font-family: muslis; */
+    height: 95%;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #1fce9a;
+    border-radius: 50%;
+    color: white;
+}
+.dropFileMessage p{
+    transform-origin: center center;
+    animation: wiggle 0.5s linear infinite;
+}
+.mainTitle{
+    text-align: center;
+    letter-spacing: 1px;
+    font-size: 26px;
+    margin-top: 30px;
+    color: #259A86;
+}
+.encodeBtn{
+    border: 2px solid #259A86;
+    width: 150px;
+    height: 40px;
+    color: white;
+    background-color: #259A86;
+    font-size: 17px;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    letter-spacing: 1px;
+    font-weight: 500;
+    border-radius: 0px;
+}
+.encodeBtn:disabled{
+    color: white;
+    background-color: #ced4da;
+    border-color: #ced4da;
+    cursor: default;
+}
+.encodeBtn:enabled:hover{
+    background-color: #1fce9a;
+    border-color: #1fce9a;
+}
+.message{
+    max-width: 50%;
+    text-align: center;
+    margin: auto;
+    /* margin-bottom: 50px; */
+    font-style: italic;
+    color: #259A86;
+}
+.dialogBox{
+    
+    width: 80vw;
+    height: 90vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    background-color: #ecf5f3;
+    box-shadow: 0px 0px 13px -2px #00000096;
+    /* position: relative; */
+}
+.dialogBox::backdrop{
+    background-color: #1fce996b;
+}
+.dialogBox .closeBtn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: black;
+    transition: 0.2s ease-in;
+    transform-origin: center center;
+}
+.dialogBox .closeBtn:hover{
+    transform: scale(1.2);
+}
+.dialogBox .dialogTitle{
+    font-size: 26px;
+    letter-spacing: 1.1px;
+    margin: 10px 15px;
+    color: #259A86;
+    text-align: center;
+}
+.dialogBox .generatedImage{
+    display: block;
+    min-width: 300px;
+    margin: 20px auto;
+    padding: 0px;
+}
