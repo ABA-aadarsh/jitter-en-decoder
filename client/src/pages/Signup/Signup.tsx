@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState , useContext} from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import style from "../../Common Styles/LoginSignup.module.css";
-import Footer from "../../Components/Footer/Footer";
+import { AuthContext } from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 function Signup() {
+    const navigate=useNavigate()
+    const {setAuthData}=useContext(AuthContext)
     const [email,setEmail]=useState<string>("")
     const [password,setPassword]=useState<string>("")
     const [username,setusername]=useState<string>("")
@@ -33,6 +36,15 @@ function Signup() {
                 document.cookie=`username=${data.username}`
                 document.cookie=`token=${data.token}`
                 console.log(document.cookie)
+                setAuthData(
+                    {
+                        isAuthenticated:true,
+                        token:data.token
+                    }
+                )
+                setTimeout(()=>{
+                    navigate("/")
+                },100)
             }else{
                 console.log(data)
             }
@@ -96,7 +108,6 @@ function Signup() {
                 className={style.noteMessage}
             >Be assured. Your documents won't be saved anywhere. Login and Signup is made compulsion to assign decryption key unique to each account. Your encrypted file can't be decrypted with other account for security reason</p>
         </div>
-        {/* <Footer/> */}
     </div>
   )
 }

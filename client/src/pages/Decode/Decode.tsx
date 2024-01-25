@@ -8,9 +8,8 @@ import { AuthContext } from '../../context/AuthContext';
 
 function Decode() {
     const {authData}=useContext(AuthContext)
-    const [loading,setLoading]=useState<boolean>(false)
     const [file,setFile]=useState<Blob | null>(null)
-    const [downloadFileData,setDownloadFileData]=useState({success:true,fileText:"",fileName:"text.txt"})
+    const [downloadFileData,setDownloadFileData]=useState({success:false,fileText:"",fileName:"text.txt"})
     const [isDragOver,setIsDragOver]=useState<boolean>(false)
     const canvas:HTMLCanvasElement=document.createElement("canvas")
     const ctx=canvas.getContext("2d")
@@ -74,8 +73,9 @@ function Decode() {
                             }}
                             onDrop={(e)=>{
                                 e.preventDefault()
-                                if(e.dataTransfer.files[0]?.type=="text/plain"){
+                                if(e.dataTransfer.files[0]?.type=="image/png"){
                                     setFile(e.dataTransfer.files[0])
+                                    
                                 }
                                 setIsDragOver(false)
                             }}
@@ -115,9 +115,11 @@ function Decode() {
                                 file?false:true
                             }
                             onClick={async()=>{
-                                setLoading(true)
                                 modalRef.current.showModal()
                                 if(canvas && file && ctx){
+                                    setDownloadFileData(prev=>{
+                                        return {...prev,success:false}
+                                    })
                                     const image=new Image()
                                     image.src=URL.createObjectURL(file)
                                     image.onload=async()=>{
@@ -148,7 +150,7 @@ function Decode() {
                                             )
                                             if(res.status==200){
                                                 const {decryptedText}=await res.json()
-                                                
+                                                console.log("hi",decryptedText)
                                                 setDownloadFileData(
                                                     {
                                                         success:true,
@@ -156,7 +158,6 @@ function Decode() {
                                                         fileName:"main.txt"
                                                     }
                                                 )
-                                                setLoading(false)
                                             }
                                         }
                                     }
@@ -178,6 +179,9 @@ function Decode() {
                 className={style.closeBtn}
                 onClick={()=>{
                     modalRef.current.close()
+                    setDownloadFileData(prev=>{
+                        return {...prev,success:false}
+                    })
                 }}
                 title="Close Modal"
             >
@@ -187,27 +191,29 @@ function Decode() {
                 className={style.dialogTitle}
             >
                 {
-                    loading?
-                    <>Your file is on way ... </>:
-                    <>Your File is ready</>
+                    downloadFileData.success?
+                    <>Your File is ready</>:
+                    <>Your file is on way ... </>
                 }
             </h3>
-            {
-                (loading && downloadFileData.success)?
-                <>Loading</>
-                :
-                <>
-                    <div
-                        className={style.fileImageContainer}
-                    >
-                        <img src="/file-icon.png" alt="" />
-                    </div>
-                    <p>{downloadFileData.fileName}</p>
-                </>
-            }
+            <div className={style.dialogBoxContent}>
+                {
+                    (downloadFileData.success)?
+                    <>
+                        <div
+                            className={style.fileImageContainer}
+                        >
+                            <img src="/file-icon.png" alt="" />
+                        </div>
+                        <p>{downloadFileData.fileName}</p>
+                    </>
+                    :
+                    <p>Loading</p>
+                }
+            </div>
             <button
             className={style.downloadBtn}
-                disabled={loading}
+                disabled={!downloadFileData.success}
                 onClick={()=>{
                     if(downloadFileData.success){
                         const blob= new Blob([downloadFileData.fileText],{type:"plain/text"})
@@ -223,9 +229,7 @@ function Decode() {
                         }
                         a.addEventListener("click",downloadHandler)
                         a.click()
-                        setDownloadFileData(prev=>{
-                            return {...prev,success:false}
-                        })
+                        
                     }
                 }}
             >Download</button>

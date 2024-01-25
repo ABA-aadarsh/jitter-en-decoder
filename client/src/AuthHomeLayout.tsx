@@ -42,20 +42,21 @@ function AuthHomeLayout() {
     setLoading(false)
   }
   useEffect(()=>{
-    if(loading==true){
-      if(loggedIn==false && authData.token!=""){
-        checkAuthenticated()
-      }else{
-        setLoading(false)
-      }
+    if(loggedIn==false && authData.token!=""){
+      checkAuthenticated()
+    }else{
+      setLoading(false)
     }
   },[])
+  useEffect(()=>{
+    if(loggedIn==true && authData.isAuthenticated==false){
+      setLoggedIn(false)
+    }
+  },[authData])
   return (
     <>
       {
-        loading?
-        <span>Page is loading</span>
-        :
+        !loading &&
         <>
           <Home
             isAuthenticated={loggedIn}

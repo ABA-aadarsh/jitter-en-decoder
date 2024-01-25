@@ -27,7 +27,7 @@ function Footer() {
                 </li>
                 <li>
                 <NavLink
-                        to="/encode"
+                        to="/decode"
                     >Decode</NavLink>
                 </li>
             </ul>

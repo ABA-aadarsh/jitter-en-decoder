@@ -6,7 +6,7 @@ import { IoClose } from "react-icons/io5";
 import { AuthContext } from '../../context/AuthContext';
 
 function Encode() {
-    const [loading,setLoading]=useState<boolean>(false)
+    const [downloadDisabled,setDownloadDisabled]=useState<boolean>(true)
     const {authData}=useContext(AuthContext)
     const [file,setFile]=useState<File | null>(null)
     const [isDragOver,setIsDragOver]=useState<boolean>(false)
@@ -175,13 +175,15 @@ function Encode() {
                             }
                             onClick={async ()=>{
                                 if(file ){
+                                    modalRef.current.showModal()
+                                    setDownloadDisabled(true)
                                     const text:string=await file.text()
                                     const fileName:string=file.name;
-                                    modalRef.current.showModal()
                                     const res=await getEncryptedFromBackend(text,fileName)
                                     if(res.status==200 && res.encryptedText){
                                         generateCanvasImage(res.encryptedText)
                                     }
+                                    setDownloadDisabled(false)
                                 }
                             }}
                         >Encode File</button>
@@ -200,6 +202,7 @@ function Encode() {
                 className={style.closeBtn}
                 onClick={()=>{
                     modalRef.current.close()
+                    setDownloadDisabled(true)
                 }}
                 title="Close Modal"
             >
@@ -208,13 +211,22 @@ function Encode() {
             <h3
                 className={style.dialogTitle}
             >Your Jittered Image Is Ready</h3>
-            <canvas
-                className={style.generatedImage}
-                ref={canvasRef}
-            ></canvas>
+            <div
+                className={style.canvasContainer}
+            >
+                <canvas
+                    className={style.generatedImage}
+                    ref={canvasRef}
+                    style={
+                        {
+                            visibility: downloadDisabled?"hidden":"unset"
+                        }
+                    }
+                ></canvas>
+            </div>
             <button
             className={style.downloadBtn}
-                disabled={loading}
+                disabled={downloadDisabled}
                 onClick={()=>{
                     var link:HTMLAnchorElement = document.createElement('a');
                     link.download = 'jitterFile.png';

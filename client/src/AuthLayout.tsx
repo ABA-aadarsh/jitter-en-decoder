@@ -7,11 +7,37 @@ function AuthLayout({
 }:{
     children:React.ReactNode
 }) {
-    const {authData}=useContext(AuthContext)
+    const {authData,setAuthData}=useContext(AuthContext)
     const navigate=useNavigate()
+    const verify=async ()=>{
+        const res=await fetch("http://localhost:8080/auth/verify",
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json",
+            "authorization": "Bearer "+authData.token
+          }
+        })
+        if(res.status==206){
+          setAuthData(
+            {
+              isAuthenticated:true,
+              token:authData.token
+            }
+          )
+        }else{
+          setAuthData(
+            {
+              isAuthenticated:false,
+              token:""
+            }
+          )
+          navigate("/login")
+        }
+      }
     useEffect(()=>{
         if(authData.isAuthenticated==false){
-            navigate("/login")
+            verify()
         }
     },[authData])
   return (

@@ -108,7 +108,7 @@
     margin-top: 30px;
     color: #259A86;
 }
-.encodeBtn{
+.encodeBtn,.downloadBtn{
     border: 2px solid #259A86;
     width: 150px;
     height: 40px;
@@ -121,13 +121,13 @@
     font-weight: 500;
     border-radius: 0px;
 }
-.encodeBtn:disabled{
+.encodeBtn:disabled,.downloadBtn:disabled{
     color: white;
     background-color: #ced4da;
     border-color: #ced4da;
     cursor: default;
 }
-.encodeBtn:enabled:hover{
+.encodeBtn:enabled:hover, .downloadBtn:enabled:hover{
     background-color: #1fce9a;
     border-color: #1fce9a;
 }
@@ -140,9 +140,8 @@
     color: #259A86;
 }
 .dialogBox{
-    
-    width: 80vw;
-    height: 90vh;
+    max-width: 450px;
+    min-width: 400px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -183,7 +182,46 @@
 }
 .dialogBox .generatedImage{
     display: block;
-    min-width: 300px;
-    margin: 20px auto;
-    padding: 0px;
+    width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0px auto;
+    position: relative;
+    z-index: 2;
+}
+.downloadBtn{
+    margin: auto;
+    display: block;
+}
+.canvasContainer{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0px;
+    position: relative;
+}
+.canvasContainer::before{
+    content: "Loading";
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+}
+.dialogBoxContent{
+}
+.dialogBoxContent .fileImageContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+    margin-bottom: 10px;
+}
+.dialogBoxContent .fileImageContainer img{
+    max-height: 100%;
+}
+.dialogBoxContent p{
+    text-align: center;
+    margin-bottom: 20px;
 }

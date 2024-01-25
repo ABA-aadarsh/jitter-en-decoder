@@ -1,7 +1,6 @@
 import { useContext, useState } from "react"
 import Navbar from "../../Components/Navbar/Navbar"
 import style from "../../Common Styles/LoginSignup.module.css"
-import Footer from "../../Components/Footer/Footer"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 function Login() {
@@ -94,7 +93,6 @@ function Login() {
                 className={style.noteMessage}
             >Be assured. Your documents won't be saved anywhere. Login and Signup is made compulsion to assign decryption key unique to each account. Your encrypted file can't be decrypted with other account for security reason</p>
         </div>
-        {/* <Footer/> */}
     </div>
   )
 }
