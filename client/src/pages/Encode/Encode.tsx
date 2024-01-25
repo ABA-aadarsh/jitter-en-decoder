@@ -1,11 +1,13 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import style from "./Encode.module.css"
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
 import { IoClose } from "react-icons/io5";
+import { AuthContext } from '../../context/AuthContext';
 
 function Encode() {
     const [loading,setLoading]=useState<boolean>(false)
+    const {authData}=useContext(AuthContext)
     const [file,setFile]=useState<File | null>(null)
     const [isDragOver,setIsDragOver]=useState<boolean>(false)
     const modalRef=useRef<any>(null)
@@ -80,10 +82,11 @@ function Encode() {
     
     const getEncryptedFromBackend=async(fileText:string,fileName:string)=>{
         try{
-            const res=await fetch("http://localhost:8080/encrypt",{
+            const res=await fetch("http://localhost:8080/api/encrypt",{
                 method:"POST",
                 headers:{
-                    "Content-Type":"application/json"
+                    "Content-Type":"application/json",
+                    "authorization":"Bearer "+authData.token
                 },
                 body:JSON.stringify(
                     {

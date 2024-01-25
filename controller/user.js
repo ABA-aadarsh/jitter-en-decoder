@@ -70,8 +70,10 @@ exports.login=async(req,res)=>{
             )
         }else if(!isAuth){
             res.status(403).send("Password Wrong")
-        }else{
+        }else if(!data){
             res.status(402).send("Create Account first")
+        }else{
+            res.status(401).send("Error while login")
         }
     }catch(err){
         res.status(405).send("Login Failed")

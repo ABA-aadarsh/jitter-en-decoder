@@ -1,10 +1,51 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Navbar from "../../Components/Navbar/Navbar"
 import style from "../../Common Styles/LoginSignup.module.css"
 import Footer from "../../Components/Footer/Footer"
+import { AuthContext } from "../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 function Login() {
+    const navigate=useNavigate()
+    const {setAuthData}=useContext(AuthContext)
     const [email,setEmail]=useState<string>("")
     const [password,setPassword]=useState<string>("")
+    const login=async ()=>{
+        try{
+            if(email=="" || password==""){return}
+            const res=await fetch("http://localhost:8080/auth/login",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify(
+                        {
+                            email,
+                            password
+                        }
+                    )
+                }
+            )
+            if(res.status==201){
+                const data=await res.json()
+                document.cookie=`username=${data.username}`
+                document.cookie=`token=${data.token}`
+                setAuthData(
+                    {
+                        isAuthenticated:true,
+                        token:data.token
+                    }
+                )
+                setTimeout(()=>{
+                    navigate("/")
+                },100)
+            }else{
+                console.log(await res.text())
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
   return (
     <div
         className={style.page}
@@ -13,14 +54,9 @@ function Login() {
         <div className={style.container}>
             <form
                 className={style.loginFormContainer}
-                onSubmit={(e)=>{
+                onSubmit={async (e)=>{
                     e.preventDefault()
-                    console.log(
-                        {
-                            email,
-                            password
-                        }
-                    )
+                    await login()
                 }}
             >
                 <h1>Login - Have Fun</h1>

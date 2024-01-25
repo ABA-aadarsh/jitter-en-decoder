@@ -8,12 +8,25 @@ import Encode from './pages/Encode/Encode.tsx'
 import Decode from './pages/Decode/Decode.tsx'
 import Login from './pages/Login/Login.tsx'
 import Signup from './pages/Signup/Signup.tsx'
+import { AuthContext } from './context/AuthContext.ts'
+import AuthLayout from './AuthLayout.tsx'
+import AuthHomeLayout from './AuthHomeLayout.tsx'
 const router=createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App/>}>
-      <Route path='' element={<Home/>}/>
-      <Route path='encode' element={<Encode/>}/>
-      <Route path='decode' element={<Decode/>}/>
+      <Route path='' element={
+        <AuthHomeLayout/>
+      }/>
+      <Route path='encode' element={
+        <AuthLayout>
+          <Encode/>
+        </AuthLayout>
+      }/>
+      <Route path='decode' element={
+        <AuthLayout>
+          <Decode/>
+        </AuthLayout>
+      }/>
       <Route path='login' element={<Login/>}/>
       <Route path='signup' element={<Signup/>}/>
     </Route>

@@ -1,13 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import style from "../Encode/Encode.module.css"
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
 
 import { IoClose } from "react-icons/io5";
+import { AuthContext } from '../../context/AuthContext';
 
 function Decode() {
+    const {authData}=useContext(AuthContext)
     const [loading,setLoading]=useState<boolean>(false)
     const [file,setFile]=useState<Blob | null>(null)
+    const [downloadFileData,setDownloadFileData]=useState({success:true,fileText:"",fileName:"text.txt"})
     const [isDragOver,setIsDragOver]=useState<boolean>(false)
     const canvas:HTMLCanvasElement=document.createElement("canvas")
     const ctx=canvas.getContext("2d")
@@ -85,7 +88,7 @@ function Decode() {
                                     </div>
                                 :
                                 <>
-                                    <img src="/file-icon.png" alt="" className={style.icon}/>
+                                    <img src="/Frame 1.svg" alt="" className={style.icon}/>
                                     <span>Drag and Drop file here</span>
                                     <span>or</span>
                                     <label
@@ -104,11 +107,16 @@ function Decode() {
                                     </label>
                                 </>
                             }
-                            <div className={style.outerBorder}></div>
+                            <div className={[style.outerBorder,style.decode].join(" ")}></div>
                         </div>
                         <button
                             className={style.encodeBtn}
+                            disabled={
+                                file?false:true
+                            }
                             onClick={async()=>{
+                                setLoading(true)
+                                modalRef.current.showModal()
                                 if(canvas && file && ctx){
                                     const image=new Image()
                                     image.src=URL.createObjectURL(file)
@@ -117,6 +125,7 @@ function Decode() {
                                         let h=image.height
                                         canvas.width=w
                                         canvas.height=h
+                                        ctx.clearRect(0,0,w,h)
                                         ctx.drawImage(
                                             image,
                                             0,0
@@ -124,11 +133,13 @@ function Decode() {
                                         const decodeRes=await decodeTextFromImage()
                                         if(decodeRes?.status=="success" && decodeRes.decodedText){
                                             const encryptedText=decodeRes.decodedText
-                                            const res=await fetch("http://localhost:8080/decrypt",
+                                            // console.log(encryptedText)
+                                            const res=await fetch("http://localhost:8080/api/decrypt",
                                                 {
                                                     method:"POST",
                                                     headers:{
-                                                        "Content-Type":"application/json"
+                                                        "Content-Type":"application/json",
+                                                        "authorization":"Bearer "+authData.token
                                                     },
                                                     body:JSON.stringify({
                                                         encryptedText: encryptedText
@@ -137,7 +148,15 @@ function Decode() {
                                             )
                                             if(res.status==200){
                                                 const {decryptedText}=await res.json()
-                                                console.log(decryptedText)
+                                                
+                                                setDownloadFileData(
+                                                    {
+                                                        success:true,
+                                                        fileText:decryptedText,
+                                                        fileName:"main.txt"
+                                                    }
+                                                )
+                                                setLoading(false)
                                             }
                                         }
                                     }
@@ -166,12 +185,48 @@ function Decode() {
             </button>
             <h3
                 className={style.dialogTitle}
-            >Your Decrypted File is Ready</h3>
+            >
+                {
+                    loading?
+                    <>Your file is on way ... </>:
+                    <>Your File is ready</>
+                }
+            </h3>
+            {
+                (loading && downloadFileData.success)?
+                <>Loading</>
+                :
+                <>
+                    <div
+                        className={style.fileImageContainer}
+                    >
+                        <img src="/file-icon.png" alt="" />
+                    </div>
+                    <p>{downloadFileData.fileName}</p>
+                </>
+            }
             <button
             className={style.downloadBtn}
                 disabled={loading}
                 onClick={()=>{
-                    
+                    if(downloadFileData.success){
+                        const blob= new Blob([downloadFileData.fileText],{type:"plain/text"})
+                        const url=URL.createObjectURL(blob)
+                        const a = document.createElement("a")
+                        a.href=url
+                        a.download=downloadFileData.fileName
+                        const downloadHandler=()=>{
+                          setTimeout(()=>{
+                            URL.revokeObjectURL(url)
+                            a.removeEventListener("click", downloadHandler)
+                          },1000)
+                        }
+                        a.addEventListener("click",downloadHandler)
+                        a.click()
+                        setDownloadFileData(prev=>{
+                            return {...prev,success:false}
+                        })
+                    }
                 }}
             >Download</button>
         </dialog>
