@@ -37,19 +37,19 @@
       },
       {
         "src":"/encode",
-        "dest":"dist/index.html/encode"
+        "dest":"dist/index.html"
       },
       {
         "src":"/decode",
-        "dest":"dist/index.html/decode"
+        "dest":"dist/index.html"
       },
       {
         "src":"/login",
-        "dest":"dist/index.html/login"
+        "dest":"dist/index.html"
       },
       {
         "src":"/signup",
-        "dest":"dist/index.html/signup"
+        "dest":"dist/index.html"
       },
       {
         "src":"/(.+)",
