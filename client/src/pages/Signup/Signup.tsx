@@ -3,6 +3,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import style from "../../Common Styles/LoginSignup.module.css";
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify";
 function Signup() {
     const navigate=useNavigate()
     const {setAuthData}=useContext(AuthContext)
@@ -31,8 +32,8 @@ function Signup() {
                     )
                 }
             )
-            const data=await res.json()
             if(res.status==200){
+                const data=await res.json()
                 document.cookie=`username=${data.username}`
                 document.cookie=`token=${data.token}`
                 console.log(document.cookie)
@@ -45,8 +46,8 @@ function Signup() {
                 setTimeout(()=>{
                     navigate("/encode")
                 },100)
-            }else{
-                console.log(data)
+            }else if(res.status==403){
+                toast.error(await res.text())
             }
         }catch(error){
             console.log(error)

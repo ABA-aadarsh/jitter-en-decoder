@@ -211,8 +211,6 @@
     position: absolute;
     z-index: 1;
 }
-.dialogBoxContent{
-}
 .dialogBoxContent .fileImageContainer{
     display: flex;
     align-items: center;

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import style from "./Footer.module.css"
 import { NavLink } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'

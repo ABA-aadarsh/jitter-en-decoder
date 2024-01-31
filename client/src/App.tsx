@@ -1,9 +1,6 @@
 import { Outlet } from "react-router-dom"
-import Decode from "./pages/Decode/Decode"
-import Encode from "./pages/Encode/Encode"
-import Home from "./pages/Home/Home"
-import Login from "./pages/Login/Login"
-import Signup from "./pages/Signup/Signup"
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { AuthContext } from "./context/AuthContext"
 import { useEffect, useState } from "react"
 function getCookie(cookieName:string) {
@@ -62,6 +59,8 @@ function App() {
       <AuthContext.Provider value={{authData,setAuthData}}>
         <Outlet/>
       </AuthContext.Provider>
+      <ToastContainer
+      />
     </>
   )
 }

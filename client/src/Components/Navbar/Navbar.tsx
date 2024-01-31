@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import style from "./Navbar.module.css"
 import { IoIosLogOut } from "react-icons/io";
 import { NavLink, useNavigate } from 'react-router-dom';

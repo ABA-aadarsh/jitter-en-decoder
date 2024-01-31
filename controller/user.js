@@ -9,6 +9,9 @@ exports.signup=async(req,res)=>{
         const hashedPassword= bcrypt.hashSync(password,10)
         const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, { algorithm: 'HS256' , expiresIn:60*60*5});
         let key = await randomBytes(10).toString("hex")
+        if(await User.findOne({email:email})){
+            res.status(403).send("Email already Exists.")
+        }
         const user=new User(
             {
                 username,
@@ -59,6 +62,10 @@ exports.login=async(req,res)=>{
                 email:email
             }
         ).exec()
+        console.log(data)
+        if(!data){
+            res.status(402).send("Account does not exist. Create Account first")
+        }
         const isAuth=bcrypt.compareSync(password,data.hashedPassword)
         if(data && isAuth){
             const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, { algorithm: 'HS256' , expiresIn:60*60*5});
@@ -70,8 +77,6 @@ exports.login=async(req,res)=>{
             )
         }else if(!isAuth){
             res.status(403).send("Password Wrong")
-        }else if(!data){
-            res.status(402).send("Create Account first")
         }else{
             res.status(401).send("Error while login")
         }

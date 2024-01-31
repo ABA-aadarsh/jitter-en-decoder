@@ -3,47 +3,46 @@ import Navbar from "../../Components/Navbar/Navbar"
 import style from "../../Common Styles/LoginSignup.module.css"
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 function Login() {
     const navigate=useNavigate()
     const {setAuthData}=useContext(AuthContext)
     const [email,setEmail]=useState<string>("")
     const [password,setPassword]=useState<string>("")
     const login=async ()=>{
-        try{
-            if(email=="" || password==""){return}
-            const res=await fetch("http://localhost:8080/auth/login",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":"application/json"
-                    },
-                    body:JSON.stringify(
-                        {
-                            email,
-                            password
-                        }
-                    )
-                }
-            )
-            if(res.status==201){
-                const data=await res.json()
-                document.cookie=`username=${data.username}`
-                document.cookie=`token=${data.token}`
-                setAuthData(
+       
+        if(email=="" || password==""){return}
+        const res=await fetch("http://localhost:8080/auth/login",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(
                     {
-                        isAuthenticated:true,
-                        token:data.token
+                        email,
+                        password
                     }
                 )
-                setTimeout(()=>{
-                    navigate("/encode")
-                },100)
-            }else{
-                console.log(await res.text())
             }
-        }catch(error){
-            console.log(error)
+        )
+        if(res.status==201){
+            const data=await res.json()
+            document.cookie=`username=${data.username}`
+            document.cookie=`token=${data.token}`
+            setAuthData(
+                {
+                    isAuthenticated:true,
+                    token:data.token
+                }
+            )
+            setTimeout(()=>{
+                navigate("/encode")
+            },100)
+        }else{
+            toast.error(await res.text())
         }
+    
     }
   return (
     <div
