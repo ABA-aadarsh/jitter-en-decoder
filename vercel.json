@@ -1,0 +1,39 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "dist/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src":"/auth",
+        "dest":"index.js"
+      },
+      {
+        "src":"/auth/(.*)",
+        "dest":"index.js"
+      },
+      {
+        "src":"/api",
+        "dest":"index.js"
+      },
+      {
+        "src":"/api/(.*)",
+        "dest":"index.js"
+      },
+      {
+        "src":"/",
+        "dest":"dist/index.html"
+      },
+      {
+        "src":"/(.+)",
+        "dest":"dist/$1"
+      }
+    ]
+  }
