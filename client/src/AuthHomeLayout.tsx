@@ -1,13 +1,14 @@
 import  { useContext, useEffect, useState } from 'react'
 import { AuthContext } from './context/AuthContext'
 import Home from './pages/Home/Home'
+import baseURL from './commonVariable'
 
 function AuthHomeLayout() {
   const {authData,setAuthData}=useContext(AuthContext)
   const [loading,setLoading]=useState(true)
   const [loggedIn,setLoggedIn]=useState(authData.isAuthenticated)
   const verify=async ()=>{
-    const res=await fetch("http://localhost:8080/auth/verify",
+    const res=await fetch(baseURL+"/auth/verify",
     {
       method:"POST",
       headers:{
