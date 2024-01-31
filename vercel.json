@@ -32,6 +32,10 @@
         "dest":"dist/index.html"
       },
       {
+        "src":"/",
+        "dest":"dist/index.html"
+      },
+      {
         "src":"/encode",
         "dest":"dist/index.html/encode"
       },
@@ -46,6 +50,10 @@
       {
         "src":"/signup",
         "dest":"dist/index.html/signup"
+      },
+      {
+        "src":"/(.+)",
+        "dest":"dist/$1"
       }
     ]
   }
