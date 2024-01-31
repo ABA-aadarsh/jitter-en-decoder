@@ -32,13 +32,20 @@
         "dest":"dist/index.html"
       },
       {
-        "src":"/(.+)",
-        "dest":"dist/$1"
+        "src":"/encode",
+        "dest":"dist/index.html/encode"
+      },
+      {
+        "src":"/decode",
+        "dest":"dist/index.html/decode"
+      },
+      {
+        "src":"/login",
+        "dest":"dist/index.html/login"
+      },
+      {
+        "src":"/signup",
+        "dest":"dist/index.html/signup"
       }
-    ],
-    "rewrites": [
-        {"source": "/(.*)", "destination": "/"}
     ]
-    
-    
   }
