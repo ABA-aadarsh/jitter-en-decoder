@@ -4,6 +4,7 @@ import style from "../../Common Styles/LoginSignup.module.css";
 import { AuthContext } from "../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
+import baseURL from "../../commonVariable";
 function Signup() {
     const navigate=useNavigate()
     const {setAuthData}=useContext(AuthContext)
@@ -17,7 +18,7 @@ function Signup() {
 
                 return
             }
-            const res=await fetch("http://localhost:8080/auth/signup",
+            const res=await fetch(baseURL+"/auth/signup",
                 {
                     method:"POST",
                     headers:{

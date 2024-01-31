@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect } from 'react'
 import { AuthContext } from './context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import baseURL from './commonVariable'
 
 function AuthLayout({
     children
@@ -10,7 +11,7 @@ function AuthLayout({
     const {authData,setAuthData}=useContext(AuthContext)
     const navigate=useNavigate()
     const verify=async ()=>{
-        const res=await fetch("http://localhost:8080/auth/verify",
+        const res=await fetch(baseURL+"/auth/verify",
         {
           method:"POST",
           headers:{

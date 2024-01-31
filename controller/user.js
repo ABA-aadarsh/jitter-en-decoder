@@ -11,6 +11,7 @@ exports.signup=async(req,res)=>{
         let key = await randomBytes(10).toString("hex")
         if(await User.findOne({email:email})){
             res.status(403).send("Email already Exists.")
+            return
         }
         const user=new User(
             {
@@ -62,9 +63,9 @@ exports.login=async(req,res)=>{
                 email:email
             }
         ).exec()
-        console.log(data)
         if(!data){
             res.status(402).send("Account does not exist. Create Account first")
+            return
         }
         const isAuth=bcrypt.compareSync(password,data.hashedPassword)
         if(data && isAuth){

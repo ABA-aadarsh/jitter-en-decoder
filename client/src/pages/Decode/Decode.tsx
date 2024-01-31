@@ -5,6 +5,7 @@ import Footer from '../../Components/Footer/Footer'
 
 import { IoClose } from "react-icons/io5";
 import { AuthContext } from '../../context/AuthContext';
+import baseURL from '../../commonVariable';
 
 function Decode() {
     const {authData}=useContext(AuthContext)
@@ -137,7 +138,7 @@ function Decode() {
                                         if(decodeRes?.status=="success" && decodeRes.decodedText){
                                             const encryptedData=decodeRes.decodedText
                                             // console.log(encryptedText)
-                                            const res=await fetch("http://localhost:8080/api/decrypt",
+                                            const res=await fetch(baseURL+"/api/decrypt",
                                                 {
                                                     method:"POST",
                                                     headers:{

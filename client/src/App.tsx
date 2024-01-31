@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { AuthContext } from "./context/AuthContext"
 import { useEffect, useState } from "react"
+import baseURL from "./commonVariable";
 function getCookie(cookieName:string) {
   let cookie:{[index:string]:string} = {};
   document.cookie.split(';').forEach(function(el) {
@@ -27,7 +28,7 @@ function App() {
 
     }else if(authData.token!=""){
       const verify=async ()=>{
-        const res=await fetch("http://localhost:8080/auth/verify",
+        const res=await fetch(baseURL+"/auth/verify",
         {
           method:"POST",
           headers:{

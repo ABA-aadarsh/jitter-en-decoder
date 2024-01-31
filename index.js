@@ -31,6 +31,7 @@ const authenticate=(req,res,next)=>{
 connectDatabase()
 app.use("/auth",UserRouter.route)
 app.use("/api",authenticate,APIRouter.route)
+app.use("/",express.static("dist"))
 
 app.listen(8080,()=>{
     console.log("Server Initiated")

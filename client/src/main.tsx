@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom'
-import Home from './pages/Home/Home.tsx'
+
 import Encode from './pages/Encode/Encode.tsx'
 import Decode from './pages/Decode/Decode.tsx'
 import Login from './pages/Login/Login.tsx'
 import Signup from './pages/Signup/Signup.tsx'
-import { AuthContext } from './context/AuthContext.ts'
 import AuthLayout from './AuthLayout.tsx'
 import AuthHomeLayout from './AuthHomeLayout.tsx'
 const router=createBrowserRouter(

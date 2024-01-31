@@ -4,6 +4,7 @@ import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
 import { IoClose } from "react-icons/io5";
 import { AuthContext } from '../../context/AuthContext';
+import baseURL from '../../commonVariable';
 
 function Encode() {
     const [downloadDisabled,setDownloadDisabled]=useState<boolean>(true)
@@ -82,7 +83,7 @@ function Encode() {
     
     const getEncryptedFromBackend=async(fileText:string,fileName:string)=>{
         try{
-            const res=await fetch("http://localhost:8080/api/encrypt",{
+            const res=await fetch(baseURL+"/api/encrypt",{
                 method:"POST",
                 headers:{
                     "Content-Type":"application/json",
