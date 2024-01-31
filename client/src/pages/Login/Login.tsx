@@ -36,7 +36,7 @@ function Login() {
                     }
                 )
                 setTimeout(()=>{
-                    navigate("/")
+                    navigate("/encode")
                 },100)
             }else{
                 console.log(await res.text())

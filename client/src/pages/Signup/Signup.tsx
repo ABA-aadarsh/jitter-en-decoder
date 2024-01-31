@@ -43,7 +43,7 @@ function Signup() {
                     }
                 )
                 setTimeout(()=>{
-                    navigate("/")
+                    navigate("/encode")
                 },100)
             }else{
                 console.log(data)

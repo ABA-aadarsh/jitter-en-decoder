@@ -1,12 +1,21 @@
 .container{
-    /* background-color: #38D9A9; */
     background-color: #1FCE9A;
-    /* margin: 10px; */
     margin-bottom: 20px;
     color: white;
     display: flex;
     align-items: center;
     padding: 15px 10px;
+}
+.linkAndBtnContainer{
+    display: flex;
+    align-items: center;
+}
+@media only screen and (max-width: 460px) {
+   .container{
+        flex-direction: column;
+        align-items: start;
+        gap: 10px;
+   } 
 }
 .container ul{
     list-style-type: none;
@@ -19,6 +28,7 @@
 }
 .logoContainer h1{
     letter-spacing: 1px;
+    text-wrap: nowrap;
 }
 .logoContainer h1 a{
     color: white;

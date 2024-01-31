@@ -11,6 +11,7 @@
     position: relative;
     background-color: inherit;
     min-height: 400px;
+    overflow-x: hidden;
     /* min-width: 400px; */
     max-width: 500px;
     display: flex;
@@ -140,8 +141,9 @@
     color: #259A86;
 }
 .dialogBox{
+    width: 100%;
     max-width: 450px;
-    min-width: 400px;
+    min-width: 350px;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);

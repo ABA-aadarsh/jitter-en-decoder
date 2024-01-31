@@ -38,14 +38,14 @@ function Home({
                     <div
                         className={style.imageContainer}
                     >
-
+                        <img src="/encryption.jpg" alt="" />
                     </div>
                 </section>
                 <section className={style.section+" "+style.wrapReverse}>
                     <div
                         className={style.imageContainer}
                     >
-
+                        <img src="/decryption.jpg" alt="" />
                     </div>
                     <div className={`${style.box}`}>
                         <h2>Decode</h2>

@@ -97,8 +97,8 @@ function Encode() {
                 )
             })
             if(res.status==200){
-                const {encryptedText}:{encryptedText:string}=await res.json()
-                return {encryptedText,status:res.status}
+                const {encryptedData}:{encryptedData:string}=await res.json()
+                return {encryptedData,status:res.status}
             }else{
                 return {error:"Failed to fetched",status:res.status}
             }
@@ -158,10 +158,11 @@ function Encode() {
                                             className={style.fileInput}
                                             onChange={(e)=>{
                                                 e.preventDefault()
-                                                if(e.target.files?.length && e.target.files.length!=0){
+                                                if(e.target.files?.length && e.target.files.length!=0 && e.target.files[0].type=="text/plain"){
                                                     setFile(e.target.files[0])
                                                 }
                                             }}
+                                            accept='text/plain'
                                         />
                                     </label>
                                 </>
@@ -180,8 +181,8 @@ function Encode() {
                                     const text:string=await file.text()
                                     const fileName:string=file.name;
                                     const res=await getEncryptedFromBackend(text,fileName)
-                                    if(res.status==200 && res.encryptedText){
-                                        generateCanvasImage(res.encryptedText)
+                                    if(res.status==200 && res.encryptedData){
+                                        generateCanvasImage(res.encryptedData)
                                     }
                                     setDownloadDisabled(false)
                                 }

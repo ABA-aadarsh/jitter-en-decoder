@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import style from "./Footer.module.css"
 import { NavLink } from 'react-router-dom'
+import { AuthContext } from '../../context/AuthContext'
 
 function Footer() {
+    const {authData}=useContext(AuthContext)
   return (
     <footer
         className={style.container}
@@ -15,23 +17,26 @@ function Footer() {
 
             <p>Github Link</p>
         </div>
-        <div
-            className={style.box2}
-        >
-            <h2>Links</h2>
-            <ul>
-                <li>
+        {
+            authData.isAuthenticated &&
+            <div
+                className={style.box2}
+            >
+                <h2>Links</h2>
+                <ul>
+                    <li>
+                        <NavLink
+                            to="/encode"
+                        >Encode</NavLink>
+                    </li>
+                    <li>
                     <NavLink
-                        to="/encode"
-                    >Encode</NavLink>
-                </li>
-                <li>
-                <NavLink
-                        to="/decode"
-                    >Decode</NavLink>
-                </li>
-            </ul>
-        </div>
+                            to="/decode"
+                        >Decode</NavLink>
+                    </li>
+                </ul>
+            </div>
+        }
     </footer>
   )
 }

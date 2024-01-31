@@ -9,7 +9,7 @@ import { AuthContext } from '../../context/AuthContext';
 function Decode() {
     const {authData}=useContext(AuthContext)
     const [file,setFile]=useState<Blob | null>(null)
-    const [downloadFileData,setDownloadFileData]=useState({success:false,fileText:"",fileName:"text.txt"})
+    const [downloadFileData,setDownloadFileData]=useState({success:false,fileText:"",fileName:"text.txt",errorStatus: false, errorMessage: ""})
     const [isDragOver,setIsDragOver]=useState<boolean>(false)
     const canvas:HTMLCanvasElement=document.createElement("canvas")
     const ctx=canvas.getContext("2d")
@@ -103,6 +103,7 @@ function Decode() {
                                                     setFile(e.target.files[0])
                                                 }
                                             }}
+                                            accept='image/png'
                                         />
                                     </label>
                                 </>
@@ -134,7 +135,7 @@ function Decode() {
                                         )
                                         const decodeRes=await decodeTextFromImage()
                                         if(decodeRes?.status=="success" && decodeRes.decodedText){
-                                            const encryptedText=decodeRes.decodedText
+                                            const encryptedData=decodeRes.decodedText
                                             // console.log(encryptedText)
                                             const res=await fetch("http://localhost:8080/api/decrypt",
                                                 {
@@ -144,18 +145,39 @@ function Decode() {
                                                         "authorization":"Bearer "+authData.token
                                                     },
                                                     body:JSON.stringify({
-                                                        encryptedText: encryptedText
+                                                        encryptedData
                                                     })
                                                 }
                                             )
                                             if(res.status==200){
                                                 const {decryptedText}=await res.json()
-                                                console.log("hi",decryptedText)
                                                 setDownloadFileData(
                                                     {
                                                         success:true,
                                                         fileText:decryptedText,
-                                                        fileName:"main.txt"
+                                                        fileName:"main.txt",
+                                                        errorStatus:false,
+                                                        errorMessage:""
+                                                    }
+                                                )
+                                            }else if(res.status==403){
+                                                setDownloadFileData(
+                                                    {
+                                                        success:false,
+                                                        errorStatus:true,
+                                                        errorMessage:"You are not authorised",
+                                                        fileName:"",
+                                                        fileText:""
+                                                    }
+                                                )
+                                            }else{
+                                                setDownloadFileData(
+                                                    {
+                                                        success:false,
+                                                        errorStatus:true,
+                                                        errorMessage:"File could not be decoded. Sorry",
+                                                        fileName:"",
+                                                        fileText:""
                                                     }
                                                 )
                                             }
@@ -189,16 +211,29 @@ function Decode() {
             </button>
             <h3
                 className={style.dialogTitle}
+                style={
+                    {
+                        color: (!downloadFileData.success && downloadFileData.errorStatus) ? "#be0000" : "#259A86"
+                    }
+                }
             >
                 {
-                    downloadFileData.success?
-                    <>Your File is ready</>:
-                    <>Your file is on way ... </>
+                    (downloadFileData.success)&&
+                    <>Your File is ready</>
                 }
+                {
+                    (!downloadFileData.success && downloadFileData.errorStatus)&&
+                    <>Your File could not be retrieved</>
+                }
+                {
+                    (!downloadFileData.success && !downloadFileData.errorStatus)&&
+                    <>Your File is on way</>
+                }
+
             </h3>
             <div className={style.dialogBoxContent}>
                 {
-                    (downloadFileData.success)?
+                    (downloadFileData.success && !downloadFileData.errorStatus)?
                     <>
                         <div
                             className={style.fileImageContainer}
@@ -208,7 +243,20 @@ function Decode() {
                         <p>{downloadFileData.fileName}</p>
                     </>
                     :
-                    <p>Loading</p>
+                    <div>
+                        {
+                            downloadFileData.errorStatus?
+                            <>
+                                <p
+                                    style={{color:"#a80909",fontStyle:"italic"}}
+                                >Sorry File Could not be decoded</p>
+                                <p
+                                    style={{color:"#a80909",fontStyle:"italic"}}
+                                >{downloadFileData.errorMessage}</p>
+                            </>:
+                            <p>Loading</p>
+                        }
+                    </div>
                 }
             </div>
             <button
