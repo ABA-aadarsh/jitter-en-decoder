@@ -2,7 +2,7 @@ import { useState , useContext} from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import style from "../../Common Styles/LoginSignup.module.css";
 import { AuthContext } from "../../context/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify";
 import baseURL from "../../commonVariable";
 function Signup() {
@@ -98,7 +98,7 @@ function Signup() {
 
                 <span
                     className={style.alternateMessage}
-                >Already Have Account ? Login Now</span>
+                >Already Have Account ? <Link to={"/login"}>Login</Link></span>
 
                 <div
                     className={style.imageContainer}
