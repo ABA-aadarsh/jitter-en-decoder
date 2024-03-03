@@ -71,6 +71,15 @@
     color: #259A86;
     cursor: pointer;
 }
+.pointerNone{
+    pointer-events: none;
+}
+.box1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 @keyframes wiggle {
     0%{
         transform: rotate(0deg);
@@ -97,10 +106,12 @@
     background-color: #1fce9a;
     border-radius: 50%;
     color: white;
+    pointer-events: none;
 }
 .dropFileMessage p{
     transform-origin: center center;
     animation: wiggle 0.5s linear infinite;
+    pointer-events: none;
 }
 .mainTitle{
     text-align: center;

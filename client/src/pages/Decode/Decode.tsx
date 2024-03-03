@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState, useEffect } from 'react'
 import style from "../Encode/Encode.module.css"
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
@@ -47,6 +47,19 @@ function Decode() {
             }
         }
     }
+    useEffect(()=>{
+        const disableDefault=(e:any)=>{
+            e.preventDefault()
+        }
+        document.addEventListener("drop",disableDefault)
+        document.addEventListener("dragover",disableDefault)
+        document.addEventListener("dropleave",disableDefault)
+        return ()=>{
+            document.removeEventListener("drop",disableDefault)
+            document.removeEventListener("dragover",disableDefault)
+            document.removeEventListener("dropleave",disableDefault)
+        }
+    },[])
   return (
     <div
         className={style.page}
@@ -66,10 +79,12 @@ function Decode() {
                     >
                         <div
                             className={style.innerContainer}
-                            onDragOver={()=>{
+                            onDragOver={(e)=>{
+                                e.preventDefault()
                                 setIsDragOver(true)
                             }}
-                            onDragLeave={()=>{
+                            onDragLeave={(e)=>{
+                                e.preventDefault()
                                 setIsDragOver(false)
                             }}
                             onDrop={(e)=>{

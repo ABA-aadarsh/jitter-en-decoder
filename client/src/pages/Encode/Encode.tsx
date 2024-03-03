@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import style from "./Encode.module.css"
 import Navbar from '../../Components/Navbar/Navbar'
 import Footer from '../../Components/Footer/Footer'
@@ -107,6 +107,19 @@ function Encode() {
             return {error:"Failed to fetched",status:406}
         }
     }
+    useEffect(()=>{
+        const disableDefault=(e:any)=>{
+            e.preventDefault()
+        }
+        document.addEventListener("drop",disableDefault)
+        document.addEventListener("dragover",disableDefault)
+        document.addEventListener("dropleave",disableDefault)
+        return ()=>{
+            document.removeEventListener("drop",disableDefault)
+            document.removeEventListener("dragover",disableDefault)
+            document.removeEventListener("dropleave",disableDefault)
+        }
+    },[])
   return (
     <div
         className={style.page}
@@ -117,7 +130,6 @@ function Encode() {
                 className={style.sectionContainer}
             >
                 <div>
-                    {/* file upload container */}
                     <h1
                     className={style.mainTitle} 
                     >Upload File You Want To Jitter</h1>
@@ -126,10 +138,12 @@ function Encode() {
                     >
                         <div
                             className={style.innerContainer}
-                            onDragOver={()=>{
+                            onDragOver={(e)=>{
+                                e.preventDefault()
                                 setIsDragOver(true)
                             }}
-                            onDragLeave={()=>{
+                            onDragLeave={(e)=>{
+                                e.preventDefault()
                                 setIsDragOver(false)
                             }}
                             onDrop={(e)=>{
@@ -147,7 +161,9 @@ function Encode() {
                                         <p>!!!</p>
                                     </div>
                                 :
-                                <>
+                                <div
+                                    className={`${style.box1} ${isDragOver?style.pointerNone:""}`}
+                                >
                                     <img src="/file-icon.png" alt="" className={style.icon}/>
                                     <span>Drag and Drop file here</span>
                                     <span>or</span>
@@ -166,7 +182,7 @@ function Encode() {
                                             accept='text/plain'
                                         />
                                     </label>
-                                </>
+                                </div>
                             }
                             <div className={style.outerBorder}></div>
                         </div>

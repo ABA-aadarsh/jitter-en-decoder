@@ -41,6 +41,7 @@ function Login() {
                 navigate("/encode")
             },100)
         }else{
+            console.log(res.status)
             toast.error(await res.text())
         }
     

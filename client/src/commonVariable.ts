@@ -1,2 +1,2 @@
-const baseURL:string="http://localhost:8080/"
+const baseURL:string="http://localhost:8080"
 export default baseURL
